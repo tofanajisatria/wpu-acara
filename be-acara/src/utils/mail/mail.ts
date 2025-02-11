@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import ejs from 'ejs';
+import path from 'path';
 
 import {
     EMAIL_SMTP_SERVICE_NAME,
@@ -27,11 +29,15 @@ export interface ISendEmail{
     subject: string;
     html: string;
 }
-const sendEmail = async ({from, to, subject, html}: ISendEmail)=>{
+export const sendEmail = async ({...mailParams}: ISendEmail)=>{
     const result = await transporter.sendMail({
-        from,
-        to,
-        subject,
-        html,
+        ...mailParams,
     });
+    return result;
+};
+
+export const renderMailHtml = async (template: string, data: any)=>{
+const content = await ejs.renderFile(path.join(__dirname,`templates/${template}`));
+return content;
+
 };

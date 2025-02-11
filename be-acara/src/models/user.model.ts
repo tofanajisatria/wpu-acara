@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import {encrypt} from "../utils/encryption";
+import {renderMailHtml, sendEmail} from '../utils/mail/mail';
 export interface User {
     fullName: string;
     username: string;
@@ -55,6 +56,18 @@ UserSchema.pre("save", function(next){
     const user = this;
     user.password=encrypt(user.password);
     next();
+});
+UserSchema.post("save", async function (doc, next){
+    const user = doc;
+    console.log("send email to", user.email);
+    const contentMail = await renderMailHtml("registration-success.ejs",{
+        username : user.username,
+        fullName : user.fullName,
+        email: user.email,
+        createdAt: user.createdAt,
+        activationLink: user.activationLink,
+    });
+
 });
 
 UserSchema.methods.toJSON = function(){

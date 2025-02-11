@@ -9,3 +9,4 @@ export const EMAIL_SMTP_USER : string = process.env.EMAIL_SMTP_USER || "";
 export const EMAIL_SMTP_PORT : number = Number(process.env.EMAIL_SMTP_PORT) || 465;
 export const EMAIL_SMTP_HOST : string = process.env.EMAIL_SMTP_HOST || "";
 export const EMAIL_SMTP_SERVICE_NAME : string = process.env.EMAIL_SMTP_SERVICE_NAME || "";
+export const SERVER_HOST:string = process.env.SERVER_HOST || "http://localhost:3000";
