@@ -20,3 +20,18 @@ const transporter = nodemailer.createTransport({
     },
     requireTLS: true,
 });
+
+export interface ISendEmail{
+    from: string,
+    to: string;
+    subject: string;
+    html: string;
+}
+const sendEmail = async ({from, to, subject, html}: ISendEmail)=>{
+    const result = await transporter.sendMail({
+        from,
+        to,
+        subject,
+        html,
+    });
+};
